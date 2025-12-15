@@ -1,0 +1,15 @@
+E:\Преподавание\apps\shop-market-example\CoreData\bin\Debug\net9.0\CoreData.deps.json
+E:\Преподавание\apps\shop-market-example\CoreData\bin\Debug\net9.0\CoreData.runtimeconfig.json
+E:\Преподавание\apps\shop-market-example\CoreData\bin\Debug\net9.0\CoreData.dll
+E:\Преподавание\apps\shop-market-example\CoreData\bin\Debug\net9.0\CoreData.pdb
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.csproj.AssemblyReference.cache
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.GeneratedMSBuildEditorConfig.editorconfig
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.AssemblyInfoInputs.cache
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.AssemblyInfo.cs
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.csproj.CoreCompileInputs.cache
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.sourcelink.json
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.dll
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\refint\CoreData.dll
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.pdb
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\CoreData.genruntimeconfig.cache
+E:\Преподавание\apps\shop-market-example\CoreData\obj\Debug\net9.0\ref\CoreData.dll

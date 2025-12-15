@@ -1,3 +1,5 @@
+using CoreData.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,9 @@ builder.Services.AddControllers()
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         options.SerializerSettings.Converters.Add(new StringEnumConverter());
     });
-
+builder.Services.AddDbContext<ShopMarketContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>

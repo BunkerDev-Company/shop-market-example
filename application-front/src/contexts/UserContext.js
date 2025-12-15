@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const UserContext = createContext();
@@ -14,21 +15,16 @@ export const UserProvider = ({ children }) => {
   }
   
   const changeParameter = (typeParam, valueParam) => {
-    setUser({...user, [typeParam]: valueParam });
+    //setUser({...user, [typeParam]: valueParam });
   };
-
+  const loadUser = async () => {
+        const user = await axios.get("https://localhost:7128/api/User/Me");
+        setUser(user.data);
+        setBalance(user.data.score);
+        setIsLoading(false);
+      }
   useEffect(() => {
-    setTimeout(() => {
-      setUser({
-        name: "Михаил",
-        email: "123@yandex.ru",
-        description: "Я программист",
-        age: "15",
-        id: 1
-      });
-      setBalance(3000);
-      setIsLoading(false);
-    }, 100)
+      loadUser();
   },[]) 
 
   return (
@@ -37,7 +33,8 @@ export const UserProvider = ({ children }) => {
       isLoading, 
       changeBalance, 
       balance,
-      changeParameter
+      changeParameter,
+      loadUser
     }}>
       {children}
     </UserContext.Provider>

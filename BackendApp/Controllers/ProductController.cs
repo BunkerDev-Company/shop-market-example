@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CoreData.Contexts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopBackend.Helpers;
+using System.Threading.Tasks;
 
 namespace ShopBackend.Controllers
 {
@@ -8,22 +12,24 @@ namespace ShopBackend.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        [HttpGet("One")]
-        public IActionResult GetOneProducts(int id)
+        private readonly ShopMarketContext _context;
+
+        public ProductController(ShopMarketContext context)
         {
-            var product = FakeDatabase._products.Where(x=>x.Id == id).Select(x=> new ProductFullDto()
+            _context = context;
+        }
+
+        [HttpGet("One")]
+        public async Task<IActionResult> GetOneProducts(Guid id)
+        {
+            var _products = await _context.Products.Include(x => x.Brand).Where(x=>x.IsActive == true).ToListAsync();
+            var product = _products.Where(x=>x.Id == id).Select(x=> new ProductFullDto()
             {
                 Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
                 Description = x.Description,
-                Reviews = x.Reviews.Select(y=> new ReviewProductDto()
-                {
-                    Id = y.Id,
-                    Comment = y.Comment,
-                    NameUser = y.NameUser
-                }).ToList()
-
+                Brand = x.Brand?.Name
             }).FirstOrDefault();
             if (product == null)
             {
@@ -33,14 +39,29 @@ namespace ShopBackend.Controllers
         }
 
         [HttpGet("All")]
-        public IActionResult GetAllProduct()
+        public async Task<IActionResult> GetAllProduct()
         {
-            var listProducts = FakeDatabase._products.Select(x => new ProductCardDto()
+            var _products = await _context.Products.Include(x=>x.Brand).Where(x => x.IsActive == true).ToListAsync();
+            var listProducts = _products.Select(x => new ProductCardDto()
             {
                 Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
-                CountReview = x.Reviews.Count()
+                Brand = x.Brand?.Name
+            }).ToList();
+            return Ok(listProducts);
+        }
+
+        [HttpGet("CartProducts")]
+        public async Task<IActionResult> GetCartProduct([FromQuery] List<Guid> ids)
+        {
+            var _products = await _context.Products.Include(x => x.Brand).Where(x => x.IsActive == true && ids.Contains(x.Id)).ToListAsync();
+            var listProducts = _products.Select(x => new ProductCardDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                Brand = x.Brand?.Name
             }).ToList();
             return Ok(listProducts);
         }
@@ -48,24 +69,23 @@ namespace ShopBackend.Controllers
 
     public class ProductCardDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = "";
-        public int Price { get; set; }
-        public int CountReview { get; set; } = 0;
+        public long Price { get; set; }
+        public string? Brand { get; set; }
     }
     public class ProductFullDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = "";
-        public int Price { get; set; }
-        public string Description { get; set; } = "";
-        public List<ReviewProductDto> Reviews = new List<ReviewProductDto>();
+        public long Price { get; set; }
+        public string? Description { get; set; } = "";
+        public string? Brand { get; set; }
     }
 
-    public class ReviewProductDto
+    public class ProductCartDto
     {
-        public int Id { get; set; }
-        public string NameUser { get; set; } = "";
-        public string Comment { get; set; } = "";
+        public Guid Id { get; set; }
+        public int Count { get; set; }
     }
 }

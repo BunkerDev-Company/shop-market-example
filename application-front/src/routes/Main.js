@@ -7,12 +7,15 @@ import { useUser } from "../contexts/UserContext";
 import { isEmpty } from "../utils/isEmpty";
 import axios from "axios";
 import Header from "../components/Header";
+import { useBackButtonManager } from '../contexts/BackButtonContext';
+import { miniApp } from '@telegram-apps/sdk-react';
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
   const navigate = useNavigate();
+  const { action, clear } = useBackButtonManager();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -22,6 +25,11 @@ const MainPage = () => {
     }
     loadProducts();
     setIsLoad(false);
+
+    miniApp.setBackgroundColor('#FFFFFF');
+    miniApp.setHeaderColor('#FFFFFF');
+
+    clear();
   }, []) 
 
   const search = (param) => {
@@ -46,6 +54,11 @@ const MainPage = () => {
     <>
       <div className="main">
         <div className="main__container">
+          <div className="row">
+            <div className="col 12 mb-3">
+              <button className="btn btn-secondary" onClick={() => {navigate("/cart")}} type="button">Перейти в корзину</button>
+            </div>
+          </div>
           <Header enableSearch={true} searchMethod={search}></Header>
           <div className="row">
             {filterProducts.map((myproduct) => (

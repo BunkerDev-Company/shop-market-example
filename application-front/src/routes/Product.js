@@ -6,12 +6,25 @@ import axios from "axios";
 import Header from "../components/Header";
 import MyProduct from "../components/MyProduct";
 import Review from "../components/Review";
+import { useBackButtonManager } from "../contexts/BackButtonContext";
+import { miniApp } from '@telegram-apps/sdk-react';
 
 const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [product, setProduct] = useState(null);
+  const { action, clear } = useBackButtonManager();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    miniApp.setBackgroundColor('#FFFFFF');
+    miniApp.setHeaderColor('#FFFFFF');
+    action(() => navigate("/"));
+    return () => {
+      clear();
+    };
+  }, []);
 
   useEffect(() => {
     const loadProduct = async () => {

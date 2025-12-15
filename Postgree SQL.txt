@@ -1,1 +1,1 @@
-dotnet ef dbcontext scaffold "Name=Default" Npgsql.EntityFrameworkCore.PostgreSQL -o Models --context "DasContext" --context-dir "Contexts" --force --project "E:\Work\DasProject\CoreData\CoreData.csproj" --startup-project .
+dotnet ef dbcontext scaffold "Name=Default" Npgsql.EntityFrameworkCore.PostgreSQL -o Models --context "ShopMarketContext" --context-dir "Contexts" --force --project "E:\Преподавание\apps\shop-market-example\CoreData\CoreData.csproj" --startup-project .
