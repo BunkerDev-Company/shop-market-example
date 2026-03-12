@@ -1,4 +1,6 @@
 using CoreData.Contexts;
+using CoreData.Services;
+using CoreData.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 
@@ -13,6 +15,7 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<ShopMarketContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("Default"))
 );
+builder.Services.AddSingleton<IImageStorageService, ImageStorageService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -26,7 +29,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowFrontend");
 app.UseEndpoints(endpoints =>

@@ -47,7 +47,8 @@ namespace ShopBackend.Controllers
                 Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
-                Brand = x.Brand?.Name
+                Brand = x.Brand?.Name,
+                Image = x.Image,
             }).ToList();
             return Ok(listProducts);
         }
@@ -73,6 +74,7 @@ namespace ShopBackend.Controllers
         public string Name { get; set; } = "";
         public long Price { get; set; }
         public string? Brand { get; set; }
+        public string? Image { get; set; }
     }
     public class ProductFullDto
     {
