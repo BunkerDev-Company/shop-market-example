@@ -39,6 +39,7 @@ namespace ShopBackend.Controllers
         }
 
         [HttpGet("All")]
+        [Authorize]
         public async Task<IActionResult> GetAllProduct()
         {
             var _products = await _context.Products.Include(x=>x.Brand).Where(x => x.IsActive == true).ToListAsync();
